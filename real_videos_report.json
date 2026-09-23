@@ -1,0 +1,220 @@
+{
+  "C3896.MP4": {
+    "video_name": "C3896.MP4",
+    "width": 3840,
+    "height": 2160,
+    "fps": 29.97,
+    "duration_sec": 340.34,
+    "lighting": {
+      "mean_brightness": 94.73,
+      "mean_contrast": 61.02,
+      "condition": "daylight"
+    },
+    "processing_time_sec": 306.64,
+    "events": [
+      [
+        0.0,
+        339.84,
+        "fire_smoke"
+      ]
+    ],
+    "sample_risks": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0
+      ],
+      [
+        2.0,
+        0.0
+      ],
+      [
+        3.0,
+        0.0
+      ],
+      [
+        4.0,
+        0.0
+      ],
+      [
+        5.0,
+        0.0
+      ],
+      [
+        6.0,
+        0.0
+      ],
+      [
+        7.0,
+        0.0
+      ],
+      [
+        8.0,
+        0.0
+      ],
+      [
+        9.0,
+        0.0
+      ]
+    ],
+    "screenshots": [
+      "c3896_analysis_1.jpg",
+      "c3896_analysis_2.jpg"
+    ]
+  },
+  "C3897.MP4": {
+    "video_name": "C3897.MP4",
+    "width": 3840,
+    "height": 2160,
+    "fps": 29.97,
+    "duration_sec": 317.82,
+    "lighting": {
+      "mean_brightness": 94.86,
+      "mean_contrast": 59.56,
+      "condition": "daylight"
+    },
+    "processing_time_sec": 282.98,
+    "events": [
+      [
+        0.0,
+        317.32,
+        "fire_smoke"
+      ]
+    ],
+    "sample_risks": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0
+      ],
+      [
+        2.0,
+        0.0
+      ],
+      [
+        3.0,
+        0.0
+      ],
+      [
+        4.0,
+        0.0
+      ],
+      [
+        5.0,
+        0.0
+      ],
+      [
+        6.0,
+        0.0
+      ],
+      [
+        7.0,
+        0.0
+      ],
+      [
+        8.0,
+        0.0
+      ],
+      [
+        9.0,
+        0.0
+      ]
+    ],
+    "screenshots": [
+      "c3897_analysis_1.jpg",
+      "c3897_analysis_2.jpg"
+    ]
+  },
+  "C3905.MP4": {
+    "video_name": "C3905.MP4",
+    "width": 3840,
+    "height": 2160,
+    "fps": 29.97,
+    "duration_sec": 127.63,
+    "lighting": {
+      "mean_brightness": 43.7,
+      "mean_contrast": 31.86,
+      "condition": "night"
+    },
+    "processing_time_sec": 109.2,
+    "events": [
+      [
+        10.01,
+        12.01,
+        "fire_smoke"
+      ],
+      [
+        11.51,
+        46.05,
+        "fire_smoke"
+      ],
+      [
+        47.55,
+        49.55,
+        "fire_smoke"
+      ],
+      [
+        50.05,
+        115.62,
+        "fire_smoke"
+      ],
+      [
+        126.13,
+        127.63,
+        "fire_smoke"
+      ]
+    ],
+    "sample_risks": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0
+      ],
+      [
+        2.0,
+        0.0
+      ],
+      [
+        3.0,
+        0.0
+      ],
+      [
+        4.0,
+        0.0
+      ],
+      [
+        5.0,
+        0.0
+      ],
+      [
+        6.0,
+        0.0
+      ],
+      [
+        7.0,
+        0.0
+      ],
+      [
+        8.0,
+        0.0
+      ],
+      [
+        9.0,
+        0.0
+      ]
+    ],
+    "screenshots": [
+      "c3905_analysis_1.jpg",
+      "c3905_analysis_2.jpg"
+    ]
+  }
+}

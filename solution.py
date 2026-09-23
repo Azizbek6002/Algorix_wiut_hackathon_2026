@@ -148,6 +148,23 @@ class RiskEstimator:
         self.collision_engine = CollisionEngine()
         self.scene = load_scene_geometry()
         self.scene_state = SceneState(self.scene)
+        self.meta = {}
+
+    def reset(self, meta: Optional[dict] = None) -> None:
+        """
+        Reset estimator state for a new video stream (official harness interface).
+        meta = {"video_id", "fps", "width", "height", "n_frames"}
+        """
+        self.meta = meta or {}
+        self.risk_core.reset()
+        self.tracker = ByteTracker()
+        self.scene_state = SceneState(self.scene)
+
+    def step(self, frame: Optional[np.ndarray], t_sec: float) -> float:
+        """
+        Official harness interface: Return P(accident starts within 5 s) in [0.0, 1.0].
+        """
+        return self.update(frame, t_sec)
 
     def update(self, frame: Optional[np.ndarray], timestamp: float) -> float:
         """
