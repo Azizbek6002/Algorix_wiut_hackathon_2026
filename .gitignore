@@ -41,7 +41,8 @@ ENV/
 *.avi
 *.mov
 *.mkv
-samples/
+samples/*
+!samples/README.md
 data/
 *.weights
 *.h5

@@ -1,0 +1,85 @@
+{
+  "scene_id": "cctv_intersection_main",
+  "resolution": [1920, 1080],
+  "nominal_fps": 30.0,
+  "road_polygons": {
+    "carriageway": [
+      [240, 1080],
+      [580, 420],
+      [1340, 420],
+      [1680, 1080]
+    ]
+  },
+  "lanes": [
+    {
+      "id": "lane_south_1",
+      "name": "To'g'ri yo'lak (O'ng)",
+      "type": "straight",
+      "expected_direction": [0.0, 1.0],
+      "polygon": [
+        [960, 420],
+        [1340, 420],
+        [1680, 1080],
+        [1180, 1080]
+      ]
+    },
+    {
+      "id": "lane_south_2",
+      "name": "To'g'ri yo'lak (Chap)",
+      "type": "straight",
+      "expected_direction": [0.0, 1.0],
+      "polygon": [
+        [760, 420],
+        [960, 420],
+        [1180, 1080],
+        [720, 1080]
+      ]
+    },
+    {
+      "id": "lane_north_oncoming",
+      "name": "Qarama-qarshi yo'lak",
+      "type": "oncoming",
+      "expected_direction": [0.0, -1.0],
+      "polygon": [
+        [580, 420],
+        [760, 420],
+        [720, 1080],
+        [240, 1080]
+      ]
+    }
+  ],
+  "solid_lines": [
+    {
+      "id": "solid_divider_center",
+      "segment": [
+        [760, 420],
+        [720, 1080]
+      ]
+    }
+  ],
+  "stop_lines": [
+    {
+      "id": "stop_line_main",
+      "segment": [
+        [760, 680],
+        [1450, 680]
+      ],
+      "linked_lanes": ["lane_south_1", "lane_south_2"]
+    }
+  ],
+  "crossings": [
+    {
+      "id": "crosswalk_south",
+      "polygon": [
+        [680, 720],
+        [1500, 720],
+        [1540, 800],
+        [640, 800]
+      ]
+    }
+  ],
+  "traffic_light": {
+    "has_traffic_light": true,
+    "roi": [1480, 220, 60, 140]
+  }
+}
