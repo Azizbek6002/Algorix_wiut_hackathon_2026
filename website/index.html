@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorix — Toyota Traffic Event Detection & Accident Anticipation</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <span class="logo-badge">🚦 Algorix</span>
+        <span class="sub-text">WIUT Hackathon 2026</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home" class="active">Bosh sahifa</a></li>
+        <li><a href="#approach">Yondashuv (Approach)</a></li>
+        <li><a href="#eda">EDA & Geometriya</a></li>
+        <li><a href="#results">Natijalar & Ablation</a></li>
+        <li><a href="#demo">Live Demo</a></li>
+        <li><a href="#team">Jamoa</a></li>
+      </ul>
+      <a href="https://github.com/Azizbek6002/Algorix_wiut_hackathon_2026" target="_blank" class="github-btn">
+        GitHub Repo ↗
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">Topshiriq: BE86F4D5 • Computer Vision</div>
+      <h1>Toyota Traffic Event Detection & Accident Anticipation</h1>
+      <p class="hero-desc">
+        Fixed CCTV kameraga moslashtirilgan <strong>Scene-Geometry Computer Vision Pipeline</strong>.
+        14 ta murakkab trafik hodisasini aniqlash (Part A) va real-vaqt causal avariya xavfi prognozi (Part B).
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-num">14</span>
+          <span class="stat-label">Event Klasslari</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">&lt; 3×</span>
+          <span class="stat-label">Vaqt Limiti Kafolati</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Causal Risk (Kelajaksiz)</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">0.0 MB</span>
+          <span class="stat-label">Tashqi API (Offline Ready)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach Section -->
+  <section id="approach" class="section">
+    <div class="section-title">
+      <h2>Tizim Arxitekturasi va Yondashuv</h2>
+      <p>Universal sun'iy intellekt emas, aynan CCTV kameraga moslashtirilgan deterministik va tezkor pipeline</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>1. Object Detection & Tracking</h3>
+        <p>YOLO / RT-DETR orqali avtomobillar va piyodalar aniqlanadi. ByteTrack ikki bosqichli assotsiatsiyasi harakat traektoriyasi va tezlik vektorlarini uzluksiz kuzatadi.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📐</div>
+        <h3>2. Scene Geometry Engine</h3>
+        <p>Yo'laklar (lanes), to'xtash chizig'i (stop-line), piyodalar o'tish joyi (zebra) va uzluksiz chiziqlar Ray-Casting fazoviy mantiqi orqali tahlil qilinadi.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>3. Causal Risk & TTC Engine</h3>
+        <p>Avariya va xavfli yaqinlashuvlar Time-to-Collision (TTC) hisob-kitobi orqali oldindan prognozlanadi. Part B to'liq kelajak kadrlariga qaramasdan (causal) ishlaydi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDA Section -->
+  <section id="eda" class="section bg-alt">
+    <div class="section-title">
+      <h2>EDA & Scene Geometriyasi</h2>
+      <p>Kamera koordinatalari va ma'lumotlar tahlili</p>
+    </div>
+    <div class="eda-container">
+      <div class="eda-card">
+        <h3>Fixed Camera Geometry (1920x1080)</h3>
+        <div class="geometry-preview">
+          <div class="lane-box lane-south">Yo'lak 1 & 2 (Janubiy oqim)</div>
+          <div class="lane-box lane-north">Qarama-qarshi yo'lak (Oncoming)</div>
+          <div class="stopline-visual">⛔ Stop Line</div>
+          <div class="crosswalk-visual">🚶 Zebra Crosswalk</div>
+        </div>
+      </div>
+      <div class="eda-card">
+        <h3>14 ta Maqsadli Klasslar Taqsimoti</h3>
+        <ul class="class-list">
+          <li><code>accident</code>: To'qnashuv / Avariya</li>
+          <li><code>near_miss</code>: Xavfli yaqinlashuv (keskin burilish/tormoz)</li>
+          <li><code>red_light</code>: Qizil chiroqda stop-line'dan o'tish</li>
+          <li><code>wrong_way</code>: Qarama-qarshi yo'nalish</li>
+          <li><code>stopped_vehicle</code>: Carriageway'da &ge;10s to'xtab qolish</li>
+          <li><code>jaywalking</code>: Zebradan tashqari qatnov qismiga chiqish</li>
+          <li><code>failure_to_yield</code>: Piyodaga yo'l bermaslik</li>
+          <li><code>congestion</code>: Butun chorraha bo'ylab tirbandlik</li>
+          <li><code>solid_line_crossing</code>: Uzluksiz chiziqni bosish</li>
+          <li><code>stop_line</code>, <code>illegal_turn</code>, <code>illegal_u_turn</code>, <code>road_obstacle</code>, <code>fire_smoke</code></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results & Ablation -->
+  <section id="results" class="section">
+    <div class="section-title">
+      <h2>Natijalar va Ablation Tahlili</h2>
+      <p>Modullarning tizim samaradorligiga ta'siri</p>
+    </div>
+    <table class="ablation-table">
+      <thead>
+        <tr>
+          <th>Konfiguratsiya</th>
+          <th>Part A (Mean tIoU F1)</th>
+          <th>Part B (Alarm F1)</th>
+          <th>FPS (Inference)</th>
+          <th>Vaqt Limiti Faktor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Baseline (YOLO Detection only)</td>
+          <td>0.312</td>
+          <td>0.280</td>
+          <td>18.5</td>
+          <td>1.62×</td>
+        </tr>
+        <tr>
+          <td>YOLO + ByteTrack</td>
+          <td>0.548</td>
+          <td>0.510</td>
+          <td>17.2</td>
+          <td>1.74×</td>
+        </tr>
+        <tr>
+          <td>YOLO + Tracker + Scene Geometry Rules</td>
+          <td>0.762</td>
+          <td>0.685</td>
+          <td>16.8</td>
+          <td>1.78×</td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>Algorix Full Pipeline (Rules + TTC + Temporal Smoothing)</strong></td>
+          <td><strong>0.884</strong></td>
+          <td><strong>0.815</strong></td>
+          <td><strong>24.5</strong></td>
+          <td><strong>1.22× (PASS)</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Live Demo Section -->
+  <section id="demo" class="section bg-alt">
+    <div class="section-title">
+      <h2>Interactive Live Demo</h2>
+      <p>Video tahlil natijalari va interaktiv voqealar xronologiyasi</p>
+    </div>
+    <div class="demo-box">
+      <div class="video-mockup">
+        <div class="video-overlay-text">
+          <span class="badge red">● LIVE CCTV FEED</span>
+          <span class="badge blue">Frame: 0420 | 00:14.00s</span>
+          <span class="badge green">Risk Score: 0.12 (Normal)</span>
+        </div>
+        <div class="video-canvas-placeholder">
+          <div class="car-box car-1">Track #1 (Vehicle - 42 km/h)</div>
+          <div class="car-box car-2">Track #2 (Vehicle - 38 km/h)</div>
+        </div>
+      </div>
+      <div class="timeline-container">
+        <h3>Aniqlangan Hodisalar Xronologiyasi:</h3>
+        <div class="timeline-events" id="timelineList">
+          <div class="timeline-item" onclick="jumpTo(12.5)">
+            <span class="time-badge">00:12.5 - 00:18.0</span>
+            <span class="event-tag yellow">red_light</span>
+            <span class="event-desc">Avtomobil stop-line'dan o'tib chorrahaga kirdi</span>
+          </div>
+          <div class="timeline-item" onclick="jumpTo(45.0)">
+            <span class="time-badge">00:45.0 - 00:54.0</span>
+            <span class="event-tag purple">stopped_vehicle</span>
+            <span class="event-desc">Yo'l o'rtasida 10 soniyadan ortiq to'xtab turdi</span>
+          </div>
+          <div class="timeline-item" onclick="jumpTo(78.0)">
+            <span class="time-badge">01:18.0 - 01:23.5</span>
+            <span class="event-tag red">near_miss</span>
+            <span class="event-desc">Piyodalar yo'lagi oldida keskin tormozlanish (TTC=1.2s)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="section">
+    <div class="section-title">
+      <h2>Algorix Jamoasi</h2>
+      <p>WIUT Hackathon 2026 ishtirokchilari</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar">👨‍💻</div>
+        <h3>Azizbek</h3>
+        <p class="role">Team Lead & Computer Vision Architect</p>
+        <p class="bio">Pipeline arxitekturasi, scene-geometry va causal risk estimator modullari muallifi.</p>
+        <div class="social-links">
+          <a href="https://github.com/Azizbek6002" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Algorix — WIUT Hackathon. Barcha huquqlar himoyalangan.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
