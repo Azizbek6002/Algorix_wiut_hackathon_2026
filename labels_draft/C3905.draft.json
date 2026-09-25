@@ -1,0 +1,313 @@
+{
+  "video": "C3905.MP4",
+  "duration": 127.6275,
+  "fps": 29.97002997002997,
+  "n_frames": 3825,
+  "draft_events": [
+    {
+      "video": "C3905.MP4",
+      "event": [
+        0.0,
+        5.906,
+        "congestion"
+      ],
+      "why": "затор: >=60% машин стоят/ползут",
+      "evidence": [
+        [
+          1.0,
+          21
+        ],
+        [
+          0.0,
+          18
+        ],
+        [
+          0.05,
+          19
+        ]
+      ],
+      "status": "unconfirmed",
+      "preview": [
+        "labels_preview\\C3905\\congestion__0.00-5.91__start.jpg",
+        "labels_preview\\C3905\\congestion__0.00-5.91__mid.jpg",
+        "labels_preview\\C3905\\congestion__0.00-5.91__end.jpg"
+      ]
+    },
+    {
+      "video": "C3905.MP4",
+      "event": [
+        0.0,
+        51.351,
+        "failure_to_yield"
+      ],
+      "why": "машина на переходе, когда там пешеход",
+      "evidence": [
+        {
+          "peds": [
+            "12",
+            "14",
+            "18",
+            "19",
+            "23",
+            "30"
+          ],
+          "vehs": [
+            "2"
+          ]
+        },
+        {
+          "peds": [
+            "12",
+            "14",
+            "18",
+            "19",
+            "23",
+            "30",
+            "40"
+          ],
+          "vehs": [
+            "2",
+            "27"
+          ]
+        },
+        {
+          "peds": [
+            "12",
+            "14",
+            "18",
+            "19",
+            "23",
+            "30"
+          ],
+          "vehs": [
+            "2",
+            "27"
+          ]
+        }
+      ],
+      "status": "unconfirmed",
+      "preview": [
+        "labels_preview\\C3905\\failure_to_yield__0.00-51.35__start.jpg",
+        "labels_preview\\C3905\\failure_to_yield__0.00-51.35__mid.jpg",
+        "labels_preview\\C3905\\failure_to_yield__0.00-51.35__end.jpg"
+      ]
+    },
+    {
+      "video": "C3905.MP4",
+      "event": [
+        0.0,
+        127.527,
+        "jaywalking"
+      ],
+      "why": "пешеход идёт по дороге вне перехода",
+      "evidence": [
+        [
+          [
+            "15",
+            "person",
+            0
+          ],
+          [
+            "20",
+            "person",
+            0
+          ],
+          [
+            "31",
+            "person",
+            0
+          ],
+          [
+            "32",
+            "person",
+            0
+          ],
+          [
+            "33",
+            "person",
+            0
+          ],
+          [
+            "35",
+            "person",
+            0
+          ],
+          [
+            "38",
+            "person",
+            0
+          ]
+        ],
+        [
+          [
+            "15",
+            "person",
+            0
+          ],
+          [
+            "20",
+            "person",
+            0
+          ],
+          [
+            "33",
+            "person",
+            0
+          ]
+        ],
+        [
+          [
+            "15",
+            "person",
+            0
+          ],
+          [
+            "20",
+            "person",
+            0
+          ],
+          [
+            "33",
+            "person",
+            0
+          ],
+          [
+            "38",
+            "person",
+            0
+          ]
+        ]
+      ],
+      "status": "unconfirmed",
+      "preview": [
+        "labels_preview\\C3905\\jaywalking__0.00-127.53__start.jpg",
+        "labels_preview\\C3905\\jaywalking__0.00-127.53__mid.jpg",
+        "labels_preview\\C3905\\jaywalking__0.00-127.53__end.jpg"
+      ]
+    },
+    {
+      "video": "C3905.MP4",
+      "event": [
+        0.1,
+        127.527,
+        "wrong_way"
+      ],
+      "why": "машина едет против главного потока",
+      "evidence": [
+        [
+          [
+            "1",
+            "car",
+            49.8
+          ],
+          [
+            "27",
+            "motorcycle",
+            13.7
+          ]
+        ],
+        [
+          [
+            "1",
+            "car",
+            26.0
+          ],
+          [
+            "8",
+            "car",
+            353.2
+          ],
+          [
+            "22",
+            "car",
+            329.4
+          ],
+          [
+            "27",
+            "motorcycle",
+            300.7
+          ]
+        ],
+        [
+          [
+            "1",
+            "car",
+            359.1
+          ],
+          [
+            "27",
+            "motorcycle",
+            341.1
+          ],
+          [
+            "29",
+            "car",
+            20.4
+          ]
+        ]
+      ],
+      "status": "unconfirmed",
+      "preview": [
+        "labels_preview\\C3905\\wrong_way__0.10-127.53__start.jpg",
+        "labels_preview\\C3905\\wrong_way__0.10-127.53__mid.jpg",
+        "labels_preview\\C3905\\wrong_way__0.10-127.53__end.jpg"
+      ]
+    },
+    {
+      "video": "C3905.MP4",
+      "event": [
+        53.754,
+        127.527,
+        "failure_to_yield"
+      ],
+      "why": "машина на переходе, когда там пешеход",
+      "evidence": [
+        {
+          "peds": [
+            "1709"
+          ],
+          "vehs": [
+            "834",
+            "1452",
+            "1548",
+            "1386",
+            "1703"
+          ]
+        },
+        {
+          "peds": [
+            "1709",
+            "924"
+          ],
+          "vehs": [
+            "834",
+            "1452",
+            "1548",
+            "1386",
+            "1703"
+          ]
+        },
+        {
+          "peds": [
+            "1709",
+            "924"
+          ],
+          "vehs": [
+            "834",
+            "1452",
+            "1548",
+            "1480",
+            "1386",
+            "1703"
+          ]
+        }
+      ],
+      "status": "unconfirmed",
+      "preview": [
+        "labels_preview\\C3905\\failure_to_yield__53.75-127.53__start.jpg",
+        "labels_preview\\C3905\\failure_to_yield__53.75-127.53__mid.jpg",
+        "labels_preview\\C3905\\failure_to_yield__53.75-127.53__end.jpg"
+      ]
+    }
+  ]
+}
