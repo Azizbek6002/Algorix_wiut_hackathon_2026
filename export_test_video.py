@@ -163,6 +163,7 @@ def main():
     last_dets = []
     last_active_events = set()
     last_risk = 0.0
+    track_histories = {}  # tid -> list of (x, y)
 
     t_start_proc = time.time()
     frames_written = 0
@@ -205,23 +206,56 @@ def main():
             vis_frame = frame.copy()
             scale_x, scale_y = 1.0, 1.0
 
-        # Draw scene road overlay if available
-        if geom is not None and geom.road_polygon:
-            pts = np.array([(int(p[0] * scale_x), int(p[1] * scale_y)) for p in geom.road_polygon], np.int32)
-            cv2.polylines(vis_frame, [pts], isClosed=True, color=(100, 200, 100), thickness=2)
+        # Draw scene road & crosswalk overlays
+        if geom is not None:
+            if geom.road_polygon:
+                pts = np.array([(int(p[0] * scale_x), int(p[1] * scale_y)) for p in geom.road_polygon], np.int32)
+                cv2.polylines(vis_frame, [pts], isClosed=True, color=(70, 200, 70), thickness=2)
+            if hasattr(geom, "crosswalks") and geom.crosswalks:
+                for cw in geom.crosswalks:
+                    cw_pts = np.array([(int(p[0] * scale_x), int(p[1] * scale_y)) for p in cw], np.int32)
+                    cv2.polylines(vis_frame, [cw_pts], isClosed=True, color=(0, 220, 255), thickness=2)
 
-        # Draw detected objects
+        # Draw detected objects & trajectories
         for d in last_dets:
             x1, y1, x2, y2 = d["xyxy"]
             px1, py1 = int(x1 * scale_x), int(y1 * scale_y)
             px2, py2 = int(x2 * scale_x), int(y2 * scale_y)
             label = d.get("label", "vehicle")
             tid = d.get("id", -1)
+            cx, cy = (px1 + px2) // 2, py2
 
-            box_color = (0, 255, 120) if label == "person" else (255, 180, 50)
+            # Track history for motion trail
+            if tid not in track_histories:
+                track_histories[tid] = []
+            if is_infer_frame:
+                track_histories[tid].append((cx, cy))
+                if len(track_histories[tid]) > 25:
+                    track_histories[tid].pop(0)
+
+            # Draw trail
+            pts = track_histories[tid]
+            for i in range(1, len(pts)):
+                alpha = int(255 * (i / len(pts)))
+                cv2.line(vis_frame, pts[i - 1], pts[i], (0, alpha, 255), 2)
+
+            # Colors per class
+            if label == "person":
+                box_color = (50, 255, 50)
+            elif label == "bus":
+                box_color = (0, 200, 255)
+            elif label in ("truck", "motorcycle"):
+                box_color = (255, 120, 0)
+            else:
+                box_color = (255, 200, 50)
+
             cv2.rectangle(vis_frame, (px1, py1), (px2, py2), box_color, 2)
-            cv2.putText(vis_frame, f"#{tid} {label}", (px1, max(20, py1 - 6)),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, box_color, 1, cv2.LINE_AA)
+            # Label tag with background pill
+            tag = f"#{tid} {label}"
+            (tw, th), _ = cv2.getTextSize(tag, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+            cv2.rectangle(vis_frame, (px1, max(0, py1 - th - 6)), (px1 + tw + 6, py1), box_color, -1)
+            cv2.putText(vis_frame, tag, (px1 + 3, max(th, py1 - 4)),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (10, 10, 10), 1, cv2.LINE_AA)
 
         # Draw HUD overlays
         draw_hud(vis_frame, t_sec, fps, last_active_events, last_risk, out_w, out_h)
@@ -235,6 +269,7 @@ def main():
             fps_proc = frames_written / elapsed if elapsed > 0 else 0
             pct = (frames_written / (end_frame - start_frame)) * 100
             print(f"  [{pct:5.1f}%] Frame {frames_written}/{end_frame - start_frame} ({fps_proc:4.1f} fps) | t={t_sec:5.1f}s | Events: {list(last_active_events)}")
+
 
     cap.release()
     writer.release()
