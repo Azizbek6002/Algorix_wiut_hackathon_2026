@@ -308,11 +308,19 @@ def main():
     cfg = json.load(open("scene_config.json"))
 
     # Build Scene from calibrated config
-    raw_rp  = cfg["road_polygon"]["points"]
-    raw_sl  = cfg["stop_lines"]["lines"]
+    rp_cfg = cfg.get("road_polygon", {})
+    raw_rp = rp_cfg.get("points", []) if isinstance(rp_cfg, dict) else rp_cfg
     road_poly = [tuple(p) for p in raw_rp]
-    stop_lines = [[(e["start"][0], e["start"][1]),
-                   (e["end"][0],   e["end"][1])] for e in raw_sl]
+
+    sl_cfg = cfg.get("stop_lines", [])
+    sl_items = sl_cfg.get("lines", []) if isinstance(sl_cfg, dict) else sl_cfg
+    stop_lines = []
+    for e in sl_items:
+        if isinstance(e, dict):
+            if "line" in e:
+                stop_lines.append([(e["line"][0][0], e["line"][0][1]), (e["line"][1][0], e["line"][1][1])])
+            elif "start" in e and "end" in e:
+                stop_lines.append([(e["start"][0], e["start"][1]), (e["end"][0], e["end"][1])])
 
     scene = Scene(width=VW, height=VH,
                   road_poly=road_poly, stop_lines=stop_lines)
@@ -392,9 +400,16 @@ def main():
     total_t = time.time() - t0
     sz_mb   = os.path.getsize(out_path) / 1024**2
 
+    # Finalize and print detected events
+    dur_total = (end_fr - start_fr) / fps
+    detected_events = event_mgr.finalize(dur_total)
+
     print("-" * 64)
     print(f"Done. {written} frames in {total_t:.1f}s ({written/total_t:.1f} fps)")
     print(f"Saved: {out_path}  ({sz_mb:.1f} MB)")
+    print(f"Detected Events Count: {len(detected_events)}")
+    for ev in detected_events:
+        print(f"  [{ev[0]:6.2f}s - {ev[1]:6.2f}s]  {ev[2].upper()}")
     print("=" * 64)
 
 
