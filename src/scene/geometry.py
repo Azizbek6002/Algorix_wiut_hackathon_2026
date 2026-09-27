@@ -98,18 +98,37 @@ class Geometry:
 
         self.road_polygon = [tuple(p) for p in
                              _enabled_entry(cfg.get("road_polygon"), "points") or []]
-        self.lanes = _enabled_list(cfg.get("lanes", []))
-        self.crosswalks = [_poly(e) for e in _enabled_list(cfg.get("crosswalks", []))]
-        self.intersections = [_poly(e) for e in
-                              _enabled_list(cfg.get("intersection_zones", []))]
-        self.u_turn_zones = [_poly(e) for e in
-                             _enabled_list(cfg.get("u_turn_zones", []))]
-        self.exclusion_regions = [_poly(e) for e in
-                                  _enabled_list(cfg.get("exclusion_regions", []))]
-        self.stop_lines = [_line(e) for e in _enabled_list(cfg.get("stop_lines", []))]
-        self.solid_lines = [_line(e) for e in _enabled_list(cfg.get("solid_lines", []))]
-        self.traffic_light_rois = [_line(e) for e in
-                                   _enabled_list(cfg.get("traffic_light_rois", []))]
+        self.lanes = _enabled_list(
+            cfg.get("lanes", {}).get("partitions") if isinstance(cfg.get("lanes"), dict)
+            else cfg.get("lanes") or []
+        )
+        cw_cfg = cfg.get("crosswalks", {})
+        cw_items = cw_cfg.get("zones", []) if isinstance(cw_cfg, dict) else cw_cfg
+        self.crosswalks = [_poly(e) for e in _enabled_list(cw_items)]
+
+        ix_cfg = cfg.get("intersection_zones", {})
+        ix_items = ix_cfg.get("zones", []) if isinstance(ix_cfg, dict) else ix_cfg
+        self.intersections = [_poly(e) for e in _enabled_list(ix_items)]
+
+        ut_cfg = cfg.get("u_turn_zones", {})
+        ut_items = ut_cfg.get("zones", []) if isinstance(ut_cfg, dict) else ut_cfg
+        self.u_turn_zones = [_poly(e) for e in _enabled_list(ut_items)]
+
+        ex_cfg = cfg.get("exclusion_regions", {})
+        ex_items = ex_cfg.get("regions", []) if isinstance(ex_cfg, dict) else ex_cfg
+        self.exclusion_regions = [_poly(e) for e in _enabled_list(ex_items)]
+
+        sl_cfg = cfg.get("stop_lines", {})
+        sl_items = sl_cfg.get("lines", []) if isinstance(sl_cfg, dict) else sl_cfg
+        self.stop_lines = [_line(e) for e in _enabled_list(sl_items)]
+
+        solid_cfg = cfg.get("solid_lines", {})
+        solid_items = solid_cfg.get("lines", []) if isinstance(solid_cfg, dict) else solid_cfg
+        self.solid_lines = [_line(e) for e in _enabled_list(solid_items)]
+
+        tl_cfg = cfg.get("traffic_light_rois", {})
+        tl_items = tl_cfg.get("rois", []) if isinstance(tl_cfg, dict) else tl_cfg
+        self.traffic_light_rois = [_line(e) for e in _enabled_list(tl_items)]
 
     # ---- conversion layer ----
     def to_ref(self, point) -> tuple[float, float]:
@@ -186,10 +205,21 @@ def _enabled_list(el):
 
 
 def _poly(e) -> list[tuple[float, float]]:
-    return [(float(p[0]), float(p[1])) for p in e["polygon"]]
+    pts = e.get("polygon") or e.get("points") or []
+    return [(float(p[0]), float(p[1])) for p in pts]
 
 
 def _line(e) -> tuple[tuple[float, float], tuple[float, float]]:
-    pts = e["line"]
-    return ((float(pts[0][0]), float(pts[0][1])),
-            (float(pts[1][0]), float(pts[1][1])))
+    # Support both "line": [[x0,y0],[x1,y1]] and "start"/"end" keys
+    if "line" in e:
+        pts = e["line"]
+        return ((float(pts[0][0]), float(pts[0][1])),
+                (float(pts[1][0]), float(pts[1][1])))
+    if "start" in e and "end" in e:
+        s, en = e["start"], e["end"]
+        return ((float(s[0]), float(s[1])), (float(en[0]), float(en[1])))
+    if "bbox" in e:
+        # [x1, y1, x2, y2] -> two corner points as a line
+        b = e["bbox"]
+        return ((float(b[0]), float(b[1])), (float(b[2]), float(b[3])))
+    raise ValueError(f"_line: unsupported entry format: {e}")

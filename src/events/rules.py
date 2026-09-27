@@ -13,6 +13,7 @@ from ..scene import Scene
 
 STILL_PX_S = 2.0
 STATIONARY_SEC = 10.0
+MAX_STATIONARY_SEC = 120.0
 CONGESTION_FRAC = 0.6
 CONGESTION_MIN_VEHICLES = 3
 CONGESTION_HOLD_SEC = 6.0
@@ -96,8 +97,10 @@ def frame_flags(tracks: dict[int, TrackState], scene: Scene, t_sec: float) -> di
     pedestrians = [st for st in tracks.values() if st.label == "person"]
 
     for st in vehicles:
-        if st.stationary_at is not None and (t_sec - st.stationary_at) >= STATIONARY_SEC:
-            flags["stopped_vehicle"] = True
+        if st.stationary_at is not None:
+            idle_time = t_sec - st.stationary_at
+            if STATIONARY_SEC <= idle_time <= MAX_STATIONARY_SEC:
+                flags["stopped_vehicle"] = True
         if st.speed >= STILL_PX_S:
             dev = min(_angle_dev(st.heading, f) for f in scene.dominant_flow_deg)
             if dev >= 180 - WRONG_WAY_DEV:
